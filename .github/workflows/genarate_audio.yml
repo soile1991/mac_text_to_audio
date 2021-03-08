@@ -6,7 +6,7 @@ on:
  
 jobs:
   linux:
-    name: Linux build on node ${{ matrix.node_version }}
+    name: macos build on node ${{ matrix.node_version }}
     # runs-on: ubuntu-latest
     runs-on: macos-latest
     strategy:
@@ -28,12 +28,10 @@ jobs:
     - name: Run start
       run: npm run start
 
-    - name: Archive production artifacts
+    - name: Archive audio artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: out dir
-        # path: |
-        # dir
+        name: audioFiles
         path: |
           Audio
         retention-days: 2

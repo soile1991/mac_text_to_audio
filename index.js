@@ -5,16 +5,9 @@ const filenamify = require('filenamify');
 var greekUtils = require('greek-utils');
 
 
-async function ganarateAudio(audioDir, textToSpeak, fileName, femaleSpeaker = true) {
-    let speaker = 'Nikos';
-    if (femaleSpeaker) {
-        speaker = 'Melina';
-        fileName += '_female'
-    } else {
-        fileName += '_male'
-    }
+async function ganarateAudio(audioDir, textToSpeak, fileName) {
+    let speaker = 'Melina';
     var { stdout, stderr } = await exec('say -v ' + speaker + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
-        // var { stdout, stderr } = await exec('say ' + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
     if (stderr) {
         console.error(`error: ${stderr}`);
     }
@@ -39,17 +32,16 @@ async function main() {
     let rawdata = fs.readFileSync(audioListJson, 'utf8');
     let audioList = JSON.parse(rawdata);
 
-    var audioDir = 'Audio/';
+    var audioDir = 'Audio/AudioFiles';
 
     if (!fs.existsSync(audioDir)) {
-        fs.mkdirSync(audioDir);
+        fs.mkdirSync(audioDir, { recursive: true });
     }
 
     let count = 1;
     for (const audio of audioList) {
         let fileName = filenamify(greekUtils.toGreeklish(audio.replace(/ /g, "_"))).replace(/[!.,]/g, "").toLowerCase();
         await ganarateAudio(audioDir, audio, count + "_" + fileName);
-        await ganarateAudio(audioDir, audio, count + "_" + fileName, false);
         count++;
     }
 }

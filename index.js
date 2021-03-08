@@ -13,8 +13,8 @@ async function ganarateAudio(audioDir, textToSpeak, fileName, femaleSpeaker = tr
     } else {
         fileName += '_male'
     }
-    // var { stdout, stderr } = await exec('say -v ' + speaker + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
-    var { stdout, stderr } = await exec('say ' + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
+    var { stdout, stderr } = await exec('say -v ' + speaker + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
+        // var { stdout, stderr } = await exec('say ' + ' "' + textToSpeak + '" -o ' + audioDir + '/' + fileName + '.aiff')
     if (stderr) {
         console.error(`error: ${stderr}`);
     }
@@ -49,7 +49,7 @@ async function main() {
     for (const audio of audioList) {
         let fileName = filenamify(greekUtils.toGreeklish(audio.replace(/ /g, "_"))).replace(/[!.,]/g, "").toLowerCase();
         await ganarateAudio(audioDir, audio, count + "_" + fileName);
-        // await ganarateAudio(audioDir, audio, count + "_" + fileName, false);
+        await ganarateAudio(audioDir, audio, count + "_" + fileName, false);
         count++;
     }
 }

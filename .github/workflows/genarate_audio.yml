@@ -3,24 +3,25 @@ on:
   push:
     branches:
       - feature/**
+      - main
  
 jobs:
-  linux:
-    name: macos build on node ${{ matrix.node_version }}
+  macos:
+    name: macos build on node ${{ node_version }}
     # runs-on: ubuntu-latest
     runs-on: macos-latest
-    strategy:
-      matrix:
-        node_version: [14.x]
+    # strategy:
+    #   matrix:
+    #     node_version: [14.x]
 
     steps:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Set Node.js version ${{ matrix.node_version }}
+    - name: Set Node.js version ${{ node_version }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node_version }}
+        node-version: ${{ node_version }}
 
     - name: Install packages
       run: npm install

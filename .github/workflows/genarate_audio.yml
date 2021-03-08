@@ -7,10 +7,11 @@ on:
 jobs:
   linux:
     name: Linux build on node ${{ matrix.node_version }}
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
-        node_version: [10.x, 12.x, 14.x]
+        node_version: [14.x]
 
     steps:
     - name: Checkout
@@ -34,5 +35,5 @@ jobs:
         # path: |
         # dir
         path: |
-        
           helloworld.txt
+        retention-days: 2

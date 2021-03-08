@@ -35,5 +35,5 @@ jobs:
         # path: |
         # dir
         path: |
-          helloworld.txt
+          Audio
         retention-days: 2
